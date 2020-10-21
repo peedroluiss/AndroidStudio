@@ -1,8 +1,11 @@
 package com.example.sqlite;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+import java.util.List;
 import androidx.annotation.Nullable;
 
 public class DeveloperuBD  extends SQLiteOpenHelper {
@@ -33,4 +36,17 @@ public class DeveloperuBD  extends SQLiteOpenHelper {
             bd.close();
         }
     }
+
+    public List<CursosModelo> mostrarCursos(){
+        SQLiteDatabase bd=getReadableDatabase();
+        Cursor cursor=bd.rawQuery("SELECT * FROM CURSOS", null);
+        List<CursosModelo> cursos=new ArrayList<>();
+        if(cursor.moveToFirst()){
+            do {
+                cursos.add(new CursosModelo(cursor.getString(0),cursor.getString(1),cursor.getString(2)));
+            }while (cursor.moveToNext());
+        }
+        return   cursos;
+    }
+
 }

@@ -1,7 +1,9 @@
 package com.example.sqlite;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +13,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+
+
 
 public class CursosActivity extends AppCompatActivity {
 
@@ -24,15 +28,17 @@ public class CursosActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cursos);
 
         recyclerViewCurso=(RecyclerView)findViewById(R.id.recyclerCursos);
+        recyclerViewCurso.setLayoutManager(new LinearLayoutManager(this));
+
+        DeveloperuBD developeruBD=new DeveloperuBD(getApplicationContext());
+
+
+        cursosAdaptador=new CursosAdaptador(developeruBD.mostrarCursos());
         recyclerViewCurso.setAdapter(cursosAdaptador);
 
+
     }
-    public List<CursosModelo> obtenerCursos(){
-        List<CursosModelo> curso=new ArrayList<>();
-        curso.add(new CursosModelo("DE100", "Android Studio 3.0", "Sistemas"));
-        curso.add(new CursosModelo("DE200", "JAVA WEB", "Sistemas"));
-        return curso;
-    }
+
 
 }
 
