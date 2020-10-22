@@ -49,4 +49,32 @@ public class DeveloperuBD  extends SQLiteOpenHelper {
         return   cursos;
     }
 
+    public void buscarCursos(CursosModelo cursos, String codigo){
+        SQLiteDatabase bd=getReadableDatabase();
+        Cursor cursor=bd.rawQuery("SELECT * FROM CURSOS WHERE CODIGO='"+codigo+"'", null);
+        if(cursor.moveToFirst()){
+            do {
+                cursos.setCurso(cursor.getString(1));
+                cursos.setCarrera(cursor.getString(2));
+            }while (cursor.moveToNext());
+        }
+
+    }
+
+    public void editarCursos(String codigo, String curso, String carrera){
+        SQLiteDatabase bd=getWritableDatabase();
+        if(bd!=null){
+            bd.execSQL("UPDATE CURSOS SET CURSO='"+curso+"',CARRERA='"+carrera+"' WHERE CODIGO='"+codigo+"'");
+            bd.close();
+        }
+    }
+
+    public void eliminarCursos(String codigo){
+        SQLiteDatabase bd=getWritableDatabase();
+        if(bd!=null){
+            bd.execSQL("DELETE FROM CURSOS WHERE CODIGO='"+codigo+"'");
+            bd.close();
+        }
+    }
+
 }
