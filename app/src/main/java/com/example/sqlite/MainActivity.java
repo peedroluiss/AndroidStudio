@@ -35,8 +35,12 @@ public class MainActivity extends AppCompatActivity {
         btnAgregar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                developeruBD.agregarCursos(edtCodigo.getText().toString(),edtCurso.getText().toString(),edtCarrera.getText().toString());
-                Toast.makeText(getApplicationContext(),"SE AGREGO CORRECTAMENTE",Toast.LENGTH_SHORT).show();
+                if(validar()) {
+                    developeruBD.agregarCursos(edtCodigo.getText().toString(), edtCurso.getText().toString(), edtCarrera.getText().toString());
+                    Toast.makeText(getApplicationContext(), "SE AGREGO CORRECTAMENTE", Toast.LENGTH_SHORT).show();
+                }
+
+
             }
         });
 
@@ -63,18 +67,48 @@ public class MainActivity extends AppCompatActivity {
         btnEditar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                developeruBD.editarCursos(edtCodigo.getText().toString(), edtCurso.getText().toString(),edtCarrera.getText().toString());
-                Toast.makeText(getApplicationContext(), "SE MODIFICO CORRECTAMENTE ", Toast.LENGTH_SHORT).show();
+                if(validar()) {
+                    developeruBD.editarCursos(edtCodigo.getText().toString(), edtCurso.getText().toString(), edtCarrera.getText().toString());
+                    Toast.makeText(getApplicationContext(), "SE MODIFICO CORRECTAMENTE ", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
         btnEliminar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               developeruBD.eliminarCursos(edtCodigo.getText().toString());
-               Toast.makeText(getApplicationContext(),"SE ELIMINO CORRECTAMENTE", Toast.LENGTH_SHORT).show();
+                if(validar()) {
+                    developeruBD.eliminarCursos(edtCodigo.getText().toString());
+                    Toast.makeText(getApplicationContext(), "SE ELIMINO CORRECTAMENTE", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
     }
+
+     public boolean validar(){
+
+        boolean retorno=true;
+        String  cD=edtCurso.getText().toString();
+        String  nCu=edtCurso.getText().toString();
+        String  nCa=edtCarrera.getText().toString();
+        if(cD.isEmpty())
+        {
+          edtCodigo.setError("Debe de ingresar un codigo");
+          retorno=false;
+
+        }
+        if(nCu.isEmpty()){
+            edtCurso.setError("Debe de ingresar un cursos");
+            retorno=false;
+        }
+        if(nCa.isEmpty())
+        {
+            edtCarrera.setError("Debe de ingresar una carrera");
+            retorno=false;
+        }
+
+
+        return  retorno;
+     }
 }
